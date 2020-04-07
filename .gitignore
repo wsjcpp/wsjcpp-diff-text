@@ -1,3 +1,7 @@
+.wsjcpp/*
+tmp/*
+wsjcpp-diff-text
+
 # Prerequisites
 *.d
 
