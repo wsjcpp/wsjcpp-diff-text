@@ -37,13 +37,14 @@ int main(int argc, const char* argv[]) {
     WsjcppCore::readTextFile(sFileName1, sFileContent1);
     WsjcppCore::readTextFile(sFileName2, sFileContent2);
 
-    std::vector<WsjcppDiffTextRow *> vResult;
+    std::vector<WsjcppDiffTextRow> vResult;
     WsjcppDiffText::compare(sFileContent1, sFileContent2, vResult);
     for (int i = 0; i < vResult.size(); i++) {
         std::cout << 
-            vResult[i]->getKey() << " => line (" << vResult[i]->getNumberOfLine() << "): " 
-            << vResult[i]->getLine() << std::endl;
+            vResult[i].getKey() << " => line (" << vResult[i].getNumberOfLine() << "): " 
+            << vResult[i].getLine() << std::endl;
     }
+    vResult.clear();
     return 0;
 }
 

@@ -27,14 +27,14 @@ class WsjcppDiffText {
         static void compare(
             const std::string &sText1, 
             const std::string &sText2, 
-            std::vector<WsjcppDiffTextRow *> &vOutput
+            std::vector<WsjcppDiffTextRow> &vOutput
         );
         static void merge(
             std::string &curtxt,
             std::string &txt1,
             std::string &txt2,
-            std::vector<WsjcppDiffTextRow *> &arr1,
-            std::vector<WsjcppDiffTextRow *> &arr2
+            std::vector<WsjcppDiffTextRow> &arr1,
+            std::vector<WsjcppDiffTextRow> &arr2
         );
 };
 

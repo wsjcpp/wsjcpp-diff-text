@@ -24,8 +24,8 @@ bool UnitTestBasic::run() {
             std::string txt1,
             std::string txt2,
             std::string txt3,
-            std::vector<WsjcppDiffTextRow *> arr1,
-            std::vector<WsjcppDiffTextRow *> arr2,
+            std::vector<WsjcppDiffTextRow> arr1,
+            std::vector<WsjcppDiffTextRow> arr2,
             unsigned int n
         ) : txt1(txt1), txt2(txt2), txt3(txt3), arr1(arr1), arr2(arr2), n(n) {
             //
@@ -33,13 +33,13 @@ bool UnitTestBasic::run() {
         std::string txt1;
         std::string txt2;
         std::string txt3;
-        std::vector<WsjcppDiffTextRow *> arr1;
-        std::vector<WsjcppDiffTextRow *> arr2;
+        std::vector<WsjcppDiffTextRow> arr1;
+        std::vector<WsjcppDiffTextRow> arr2;
         unsigned int n;
     };
 
     std::vector<LTest *> tests1;
-    std::vector<WsjcppDiffTextRow *> arr1, arr2;
+    std::vector<WsjcppDiffTextRow> arr1, arr2;
 
     std::string text1 = text001();
     std::string text2 = text002();
@@ -113,9 +113,9 @@ bool UnitTestBasic::run() {
             std::string txt1,
             std::string txt2,
             std::string txt3,
-            std::vector<WsjcppDiffTextRow *> arr1,
-            std::vector<WsjcppDiffTextRow *> arr2,
-            std::vector<WsjcppDiffTextRow *> arr3
+            std::vector<WsjcppDiffTextRow> arr1,
+            std::vector<WsjcppDiffTextRow> arr2,
+            std::vector<WsjcppDiffTextRow> arr3
         ) : txt1(txt1), txt2(txt2), txt3(txt3), arr1(arr1), arr2(arr2), arr3(arr3) {
             // 
         }
@@ -123,13 +123,13 @@ bool UnitTestBasic::run() {
         std::string txt1;
         std::string txt2;
         std::string txt3;
-        std::vector<WsjcppDiffTextRow *> arr1;
-        std::vector<WsjcppDiffTextRow *> arr2;
-        std::vector<WsjcppDiffTextRow *> arr3;
+        std::vector<WsjcppDiffTextRow> arr1;
+        std::vector<WsjcppDiffTextRow> arr2;
+        std::vector<WsjcppDiffTextRow> arr3;
     };
 
     std::vector<LTest2 *> tests2;
-    std::vector<WsjcppDiffTextRow *> arr3;
+    std::vector<WsjcppDiffTextRow> arr3;
     int id[8] = {0,1,1,2,3,4,5,6};
     std::vector<std::string> skey;
     skey.push_back("I");
@@ -151,7 +151,9 @@ bool UnitTestBasic::run() {
     sline.push_back("good");
     sline.push_back("boy");
 
-    for (int i=0;i<skey.size();++i) arr3.push_back(new WsjcppDiffTextRow(id[i], skey.at(i), sline.at(i)));
+    for (int i = 0; i < skey.size(); ++i) {
+        arr3.push_back(WsjcppDiffTextRow(id[i], skey.at(i), sline.at(i)));
+    }
 
     tests2.push_back(new LTest2(
         "You\nare\ngot\nand\ngood",
@@ -166,13 +168,13 @@ bool UnitTestBasic::run() {
 
     unsigned int Success = 0;
     for (int i = 0; i < 8; ++i) {
-        int id1 = arr1.at(i)->getNumberOfLine();
-        int id2 = arr3.at(i)->getNumberOfLine();
-        std::string key1 = arr1.at(i)->getKey();
-        std::string key2 = arr3.at(i)->getKey();
-        std::string line1 = arr1.at(i)->getLine();
-        std::string line2 = arr3.at(i)->getLine();
-        if (id1==id2 && key1==key2 && line1==line2) {
+        int id1 = arr1[i].getNumberOfLine();
+        int id2 = arr3[i].getNumberOfLine();
+        std::string key1 = arr1[i].getKey();
+        std::string key2 = arr3[i].getKey();
+        std::string line1 = arr1[i].getLine();
+        std::string line2 = arr3[i].getLine();
+        if (id1 == id2 && key1 == key2 && line1 == line2) {
             Success+=1;
         } else {
             WsjcppLog::info(TAG, "In the sort test in the element №" + std::to_string(i+1) + ":");
