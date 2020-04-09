@@ -166,8 +166,8 @@ bool UnitTestBasic::run() {
 
     unsigned int Success = 0;
     for (int i = 0; i < 8; ++i) {
-        int id1 = arr1.at(i)->id;
-        int id2 = arr3.at(i)->id;
+        int id1 = arr1.at(i)->getNumberOfLine();
+        int id2 = arr3.at(i)->getNumberOfLine();
         std::string key1 = arr1.at(i)->key;
         std::string key2 = arr3.at(i)->key;
         std::string line1 = arr1.at(i)->line;

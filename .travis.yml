@@ -18,6 +18,7 @@ addons:
 # Build steps
 script:
   - ./build_simple.sh
+  - ./wsjcpp-diff-text data/file1.txt data/file2.txt
   - cd unit-tests.wsjcpp
   - ./build_simple.sh
   - ./unit-tests

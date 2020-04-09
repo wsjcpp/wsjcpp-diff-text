@@ -1,6 +1,7 @@
 .wsjcpp/*
 tmp/*
 wsjcpp-diff-text
+.vscode/
 
 # Prerequisites
 *.d

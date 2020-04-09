@@ -4,6 +4,8 @@ cmake_minimum_required: "3.0"
 cmake_cxx_standard: "11"
 description: "Diff texts"
 authors:
+  - name: "Danil Dudkin"
+    email: "shikamaru740@gmail.com"
   - name: "Evgenii Sopov"
     email: "mrseakg@gmail.com"
 

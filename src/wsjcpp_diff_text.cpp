@@ -5,25 +5,35 @@
 // ---------------------------------------------------------------------
 // WsjcppDiffTextRow
 
-WsjcppDiffTextRow::WsjcppDiffTextRow(int id, std::string key, std::string line) {
-    this->id = id;
+WsjcppDiffTextRow::WsjcppDiffTextRow(int nNumberOfLine, std::string key, std::string line) {
+    m_nNumberOfLine = nNumberOfLine;
     this->key = key; 
     this->line = line;
 }
 
 // ---------------------------------------------------------------------
+
+int WsjcppDiffTextRow::getNumberOfLine() {
+    return m_nNumberOfLine;
+}
+
+// ---------------------------------------------------------------------
 // WsjcppDiffText
 
-void WsjcppDiffText::compare(std::string &txt1, std::string &txt2, std::vector<WsjcppDiffTextRow *> &arr) {
+void WsjcppDiffText::compare(
+    const std::string &sText1, 
+    const std::string &sText2, 
+    std::vector<WsjcppDiffTextRow *> &vOutput
+) {
     std::vector<std::string> list1;
-    std::istringstream isTxt1(txt1);
+    std::istringstream isTxt1(sText1);
     std::string sLine = "";
     while (getline(isTxt1, sLine, '\n')) {
         list1.push_back(sLine);
     }
 
     std::vector<std::string> list2;
-    std::istringstream isTxt2(txt2);
+    std::istringstream isTxt2(sText2);
     sLine = "";
     while (getline(isTxt2, sLine, '\n')) {
         list2.push_back(sLine);
@@ -43,7 +53,7 @@ void WsjcppDiffText::compare(std::string &txt1, std::string &txt2, std::vector<W
             for (int k = j + 1; k < len2; ++k) {
                 if (list1[i] == list2[k]) {
                     while (j<k) {
-                        arr.push_back(new WsjcppDiffTextRow(j, sWord.at(0), list2.at(j)));
+                        vOutput.push_back(new WsjcppDiffTextRow(j, sWord.at(0), list2.at(j)));
                         j++;
                     }
                     goto exit;
@@ -53,24 +63,24 @@ void WsjcppDiffText::compare(std::string &txt1, std::string &txt2, std::vector<W
             for (int k=i+1;k<len1;++k) {
                 if (list1[k]==list2[j]) {
                     while (i<k) {
-                        arr.push_back(new WsjcppDiffTextRow(i, sWord.at(1), list1.at(i)));
+                        vOutput.push_back(new WsjcppDiffTextRow(i, sWord.at(1), list1.at(i)));
                         i++;
                     }
                     goto exit;
                 }
             }
-            arr.push_back(new WsjcppDiffTextRow(i, list1.at(i), list2.at(j)));
+            vOutput.push_back(new WsjcppDiffTextRow(i, list1.at(i), list2.at(j)));
             exit:;
         }
         i++, j++;
     }
     //work with the end of the texts
     while (j<len2) {
-        arr.push_back(new WsjcppDiffTextRow(j, sWord.at(0), list2.at(j)));
+        vOutput.push_back(new WsjcppDiffTextRow(j, sWord.at(0), list2.at(j)));
         j++;
     }
     while (i<len1) {
-        arr.push_back(new WsjcppDiffTextRow(i, sWord.at(1), list1.at(i)));
+        vOutput.push_back(new WsjcppDiffTextRow(i, sWord.at(1), list1.at(i)));
         i++;
     }
 }
@@ -84,8 +94,8 @@ void WsjcppDiffText::merge(
     std::vector<WsjcppDiffTextRow *> &arr1,
     std::vector<WsjcppDiffTextRow *> &arr2
 ) {
-    compare(txt1, txt2, arr1);
-    compare(txt1, curtxt, arr2);
+    WsjcppDiffText::compare(txt1, txt2, arr1);
+    WsjcppDiffText::compare(txt1, curtxt, arr2);
     for (unsigned int i=0;i<arr2.size();++i) {
         for (unsigned int j=0;j<arr1.size();++j) {
             //delete of matches and 'del'/'add' overlays from the first vector
@@ -115,16 +125,14 @@ void WsjcppDiffText::merge(
             }
         }
     }
-    //merge and sort vectors
+    // merge and sort vectors
     arr1.reserve(arr1.size()+arr2.size());
     arr1.insert(arr1.end(),arr2.begin(),arr2.end());
     for (unsigned int i=0; i < arr1.size(); ++i) {
         for (unsigned int j = arr1.size()-1; j > i; --j) {
-            if (arr1.at(j-1)->id > arr1.at(j)->id) {
+            if (arr1.at(j-1)->getNumberOfLine() > arr1.at(j)->getNumberOfLine()) {
                 // TODO redesign
-                std::swap(arr1.at(j-1)->id, arr1.at(j)->id);
-                std::swap(arr1.at(j-1)->key, arr1.at(j)->key);
-                std::swap(arr1.at(j-1)->line, arr1.at(j)->line);
+                std::swap(arr1.at(j-1), arr1.at(j));
             }
         }
     }
