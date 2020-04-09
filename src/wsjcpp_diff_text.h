@@ -9,15 +9,17 @@ class WsjcppDiffTextRow {
     public:
         WsjcppDiffTextRow(
             int nNumberOfLine, 
-            std::string key, 
-            std::string line
+            const std::string &sKey,
+            const std::string &sLine
         );
         int getNumberOfLine();
+        std::string getKey();
+        std::string getLine();
 
-        std::string key;
-        std::string line;
     private:
         int m_nNumberOfLine;
+        std::string m_sKey;
+        std::string m_sLine;
 };
 
 class WsjcppDiffText {

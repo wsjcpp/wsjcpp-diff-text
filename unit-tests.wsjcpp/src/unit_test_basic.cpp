@@ -168,10 +168,10 @@ bool UnitTestBasic::run() {
     for (int i = 0; i < 8; ++i) {
         int id1 = arr1.at(i)->getNumberOfLine();
         int id2 = arr3.at(i)->getNumberOfLine();
-        std::string key1 = arr1.at(i)->key;
-        std::string key2 = arr3.at(i)->key;
-        std::string line1 = arr1.at(i)->line;
-        std::string line2 = arr3.at(i)->line;
+        std::string key1 = arr1.at(i)->getKey();
+        std::string key2 = arr3.at(i)->getKey();
+        std::string line1 = arr1.at(i)->getLine();
+        std::string line2 = arr3.at(i)->getLine();
         if (id1==id2 && key1==key2 && line1==line2) {
             Success+=1;
         } else {

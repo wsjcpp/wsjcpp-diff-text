@@ -41,9 +41,8 @@ int main(int argc, const char* argv[]) {
     WsjcppDiffText::compare(sFileContent1, sFileContent2, vResult);
     for (int i = 0; i < vResult.size(); i++) {
         std::cout << 
-            vResult[i]->key << " => line (" << vResult[i]->getNumberOfLine() << "): " 
-            << vResult[i]->line << std::endl;
-        
+            vResult[i]->getKey() << " => line (" << vResult[i]->getNumberOfLine() << "): " 
+            << vResult[i]->getLine() << std::endl;
     }
     return 0;
 }

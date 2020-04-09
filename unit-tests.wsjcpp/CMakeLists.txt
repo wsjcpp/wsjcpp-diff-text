@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 project(unit-tests C CXX)
-add_definitions(-DWSJCPP_VERSION="ut-v0.1.0")
+add_definitions(-DWSJCPP_VERSION="ut-v0.1.2")
 add_definitions(-DWSJCPP_NAME="unit-tests-wsjcpp-diff-text")
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -27,7 +27,7 @@ list (APPEND WSJCPP_SOURCES "../src.wsjcpp/wsjcpp_core/wsjcpp_unit_tests.cpp")
 list (APPEND WSJCPP_SOURCES "../src.wsjcpp/wsjcpp_core/wsjcpp_unit_tests.h")
 list (APPEND WSJCPP_SOURCES "../src.wsjcpp/wsjcpp_core/wsjcpp_unit_tests_main.cpp")
 
-# wsjcpp-diff-text:v0.1.0
+# wsjcpp-diff-text:v0.1.2
 list (APPEND WSJCPP_INCLUDE_DIRS "../src")
 list (APPEND WSJCPP_SOURCES "../src/wsjcpp_diff_text.cpp")
 list (APPEND WSJCPP_SOURCES "../src/wsjcpp_diff_text.h")
