@@ -31,13 +31,12 @@ std::string sFileContent2;
 WsjcppCore::readTextFile("data/file1.txt", sFileContent1);
 WsjcppCore::readTextFile("data/file1.txt", sFileContent2);
 
-std::vector<WsjcppDiffTextRow *> vResult;
+std::vector<WsjcppDiffTextRow> vResult;
 WsjcppDiffText::compare(sFileContent1, sFileContent2, vResult);
 for (int i = 0; i < vResult.size(); i++) {
     std::cout << 
-        vResult[i]->key << " => line (" << vResult[i]->getNumberOfLine() << "): " 
-        << vResult[i]->line << std::endl;
-    
+        vResult[i].getKey() << " => line (" << vResult[i].getNumberOfLine() << "): " 
+        << vResult[i].getLine() << std::endl;
 }
 ```
 
