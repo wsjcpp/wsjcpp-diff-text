@@ -1,6 +1,6 @@
 # wsjcpp-diff-text
 
-[![Build Status](https://api.travis-ci.com/wsjcpp/wsjcpp-diff-text.svg?branch=master)](https://travis-ci.com/wsjcpp/wsjcpp-diff-text) [![Github Stars](https://img.shields.io/github/stars/wsjcpp/wsjcpp-diff-text.svg?label=github%20%E2%98%85)](https://github.com/wsjcpp/wsjcpp-diff-text) [![Github Stars](https://img.shields.io/github/contributors/wsjcpp/wsjcpp-diff-text.svg)](https://github.com/wsjcpp/wsjcpp-diff-text) [![Github Forks](https://img.shields.io/github/forks/wsjcpp/wsjcpp-diff-text.svg?label=github%20forks)](https://github.com/wsjcpp/wsjcpp-diff-text/network/members)
+[![Build Status](https://api.travis-ci.com/wsjcpp/wsjcpp-diff-text.svg?branch=master)](https://travis-ci.com/wsjcpp/wsjcpp-diff-text) [![Github Stars](https://img.shields.io/github/stars/wsjcpp/wsjcpp-diff-text.svg?label=github%20%E2%98%85)](https://github.com/wsjcpp/wsjcpp-diff-text) [![Github Stars](https://img.shields.io/github/contributors/wsjcpp/wsjcpp-diff-text.svg)](https://github.com/wsjcpp/wsjcpp-diff-text) [![Github Forks](https://img.shields.io/github/forks/wsjcpp/wsjcpp-diff-text.svg?label=github%20forks)](https://github.com/wsjcpp/wsjcpp-diff-text/network/members) [![Total alerts](https://img.shields.io/lgtm/alerts/g/wsjcpp/wsjcpp-diff-text.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/wsjcpp/wsjcpp-diff-text/alerts/) [![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/wsjcpp/wsjcpp-diff-text.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/wsjcpp/wsjcpp-diff-text/context:cpp)
 
 Algorithm for like a diff texts
 

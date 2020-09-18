@@ -11,13 +11,14 @@ UnitTestBasic::UnitTestBasic()
 
 // ---------------------------------------------------------------------
 
-void UnitTestBasic::init() {
+bool UnitTestBasic::doBeforeTest() {
     // nothing
+    return true;
 }
 
 // ---------------------------------------------------------------------
 
-bool UnitTestBasic::run() {
+void UnitTestBasic::executeTest() {
 
     struct LTest {
         LTest(
@@ -90,7 +91,6 @@ bool UnitTestBasic::run() {
     tests1.push_back(new LTest("You\nare\ngot\nand\ngood", "I\ngot\nMike\nand\nthis is\ngood\nboy", "I\ncure\ndamn\nill\ncancer", arr1, arr2, 8));
     tests1.push_back(new LTest("We\nspent\nthe rest\nof our life\non\nthis\ncourse\nwork", "We\nspent\na lot of\ntime\non\nthis\ncourse\nwork", "We\ngonna\nspend\na lot of\nfunky\ntime\non\ncourse\nwork", arr1, arr2, 6));
 
-    unsigned int nSuccess = 0;
     for (unsigned int i = 0; i < tests1.size(); i++) {
         std::string txt1 = tests1[i]->txt1;
         std::string txt2 = tests1[i]->txt2;
@@ -98,12 +98,9 @@ bool UnitTestBasic::run() {
         WsjcppDiffText::merge(txt1, txt2, txt3, arr1, arr2);
         unsigned int n = tests1[i]->n;
 
-        if (arr1.size()==n) {
-            nSuccess++;
-        } else {
-            WsjcppLog::err(TAG, "In the test №" + std::to_string(i + 1) + " the length of the vector is expected: "
-                 + std::to_string(n) + ", but obtained: " + std::to_string(arr1.size()));
-        }
+        compare("In the test №" + std::to_string(i + 1) + " the length of the vector is expected: "
+                 + std::to_string(n) + ", but obtained: " + std::to_string(arr1.size()), 
+            arr1.size(), n);
         arr1.clear(), arr2.clear();
     }
 
@@ -166,7 +163,6 @@ bool UnitTestBasic::run() {
     std::string txt3 = tests2[0]->txt3;
     WsjcppDiffText::merge(txt1, txt2, txt3, arr1, arr2);
 
-    unsigned int Success = 0;
     for (int i = 0; i < 8; ++i) {
         int id1 = arr1[i].getNumberOfLine();
         int id2 = arr3[i].getNumberOfLine();
@@ -174,32 +170,18 @@ bool UnitTestBasic::run() {
         std::string key2 = arr3[i].getKey();
         std::string line1 = arr1[i].getLine();
         std::string line2 = arr3[i].getLine();
-        if (id1 == id2 && key1 == key2 && line1 == line2) {
-            Success+=1;
-        } else {
-            WsjcppLog::info(TAG, "In the sort test in the element №" + std::to_string(i+1) + ":");
-
-            if (id1!=id2) {
-                WsjcppLog::err(TAG, "expected id: '" + std::to_string(id2) + "', but obtained: '" + std::to_string(id1) + "'");
-            }
-
-            if (key1!=key2) {
-                WsjcppLog::err(TAG, "expected key: '" + key2 + "', but obtained: '" + key1 + "'");
-            }
-
-            if (line1!=line2) {
-                WsjcppLog::err(TAG, "expected line: '" + line2 + "', but obtained: '" + line1 + "'");
-            }
-        }
+        compare("In the sort test in the element №" + std::to_string(i+1) + ": id1 != id2", id1, id2);
+        compare("In the sort test in the element №" + std::to_string(i+1) + ": key1 != key2", key1, key2);
+        compare("In the sort test in the element №" + std::to_string(i+1) + ": line1 != line2", line1, line2);
     }
-
-    if (Success == 8) {
-        nSuccess++;
-    }
-
-    return nSuccess == tests1.size() + 1;
 }
 
+// ---------------------------------------------------------------------
+
+bool UnitTestBasic::doAfterTest() {
+    // nothing
+    return true;
+}
 
 // ---------------------------------------------------------------------
 

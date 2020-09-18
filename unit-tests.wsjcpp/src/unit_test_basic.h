@@ -7,8 +7,9 @@
 class UnitTestBasic : public WsjcppUnitTestBase {
     public:
         UnitTestBasic();
-        virtual void init();
-        virtual bool run();
+        virtual bool doBeforeTest() override;
+        virtual void executeTest() override;
+        virtual bool doAfterTest() override;
     private:
         std::string text001();
         std::string text002();
