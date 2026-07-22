@@ -30,8 +30,3 @@ distribution:
   - source-file: "src/wsjcpp_diff_text.h"
     target-file: "wsjcpp_diff_text.h"
     type: "source-code"
-
-unit-tests:
-  cases:
-    - name: "Basic"
-      description: "Basic test"
