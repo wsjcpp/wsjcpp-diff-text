@@ -5,37 +5,50 @@
 #include <vector>
 #include <string>
 
-class WsjcppDiffTextRow {
+namespace wsjcpp {
+
+enum class diff_text_row_action {
+  NONE,
+  INSERT,
+  DELETE
+};
+
+class diff_text_row {
 public:
-  WsjcppDiffTextRow(
-    int nNumberOfLine,
-    const std::string &sKey,
-    const std::string &sLine
+  diff_text_row(
+    int number_of_line,
+    const std::string &key,
+    const std::string &line
   );
   int getNumberOfLine();
   std::string getKey();
   std::string getLine();
 
 private:
-  int m_nNumberOfLine;
-  std::string m_sKey;
-  std::string m_sLine;
+  int m_number_of_line;
+  std::string m_key;
+  std::string m_line;
 };
 
-class WsjcppDiffText {
-public:
-  static void compare(
-    const std::string &sText1,
-    const std::string &sText2,
-    std::vector<WsjcppDiffTextRow> &vOutput
-  );
-  static void merge(
-    std::string &curtxt,
-    std::string &txt1,
-    std::string &txt2,
-    std::vector<WsjcppDiffTextRow> &arr1,
-    std::vector<WsjcppDiffTextRow> &arr2
-  );
-};
+void diff_text_split(
+  const std::string &text,
+  std::vector<std::string> &output
+);
+
+void diff_text_compare(
+  const std::string &text_left,
+  const std::string &text_right,
+  std::vector<diff_text_row> &output_diff
+);
+
+void diff_text_merge(
+  std::string &curtxt,
+  std::string &txt1,
+  std::string &txt2,
+  std::vector<wsjcpp::diff_text_row> &arr1,
+  std::vector<wsjcpp::diff_text_row> &arr2
+);
+
+} // namespace wsjcpp
 
 #endif // WSJCPP_DIFF_TEXT_H

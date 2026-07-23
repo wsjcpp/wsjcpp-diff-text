@@ -2,114 +2,104 @@
 #include "wsjcpp_diff_text.h"
 #include <sstream>
 
-// ---------------------------------------------------------------------
-// WsjcppDiffTextRow
+namespace wsjcpp {
 
-WsjcppDiffTextRow::WsjcppDiffTextRow(
-  int nNumberOfLine,
-  const std::string &sKey,
-  const std::string &sLine
-) {
-  m_nNumberOfLine = nNumberOfLine;
-  m_sKey = sKey;
-  m_sLine = sLine;
+diff_text_row::diff_text_row(
+  int number_of_line,
+  const std::string &key,
+  const std::string &line
+) :
+  m_number_of_line(number_of_line)
+  , m_key(key)
+  , m_line(line)
+{}
+
+int diff_text_row::getNumberOfLine() {
+  return m_number_of_line;
 }
 
-// ---------------------------------------------------------------------
-
-int WsjcppDiffTextRow::getNumberOfLine() {
-  return m_nNumberOfLine;
+std::string diff_text_row::getKey() {
+  return m_key;
 }
 
-// ---------------------------------------------------------------------
-
-std::string WsjcppDiffTextRow::getKey() {
-  return m_sKey;
+std::string diff_text_row::getLine() {
+  return m_line;
 }
 
-// ---------------------------------------------------------------------
-
-std::string WsjcppDiffTextRow::getLine() {
-  return m_sLine;
-}
-
-// ---------------------------------------------------------------------
-// WsjcppDiffText
-
-void WsjcppDiffText::compare(
-  const std::string &sText1,
-  const std::string &sText2,
-  std::vector<WsjcppDiffTextRow> &vOutput
-) {
-  std::vector<std::string> list1;
-  std::istringstream isTxt1(sText1);
-  std::string sLine = "";
-  while (getline(isTxt1, sLine, '\n')) {
-    list1.push_back(sLine);
+void diff_text_split(const std::string &text, std::vector<std::string> &output) {
+  std::istringstream is_text(text);
+  std::string line = "";
+  while (getline(is_text, line, '\n')) {
+    output.push_back(line);
   }
+}
 
-  std::vector<std::string> list2;
-  std::istringstream isTxt2(sText2);
-  sLine = "";
-  while (getline(isTxt2, sLine, '\n')) {
-    list2.push_back(sLine);
-  }
+void diff_text_compare(
+  const std::string &text_left,
+  const std::string &text_right,
+  std::vector<diff_text_row> &output_diff
+) {
+  std::vector<std::string> list_left;
+  diff_text_split(text_left, list_left);
+
+  std::vector<std::string> list_right;
+  diff_text_split(text_right, list_right);
 
   std::vector<std::string> sWord;
   sWord.push_back("!add");
   sWord.push_back("!del");
 
-  int len1 = list1.size();
-  int len2 = list2.size();
+  int len1 = list_left.size();
+  int len2 = list_right.size();
   int i = 0, j = 0;
   //main comparisons
   while ((i<len1) && (j<len2)) {
-    if (list1[i] != list2[j]) {
+    if (list_left[i] != list_right[j]) {
       // checkout for added rows
       for (int k = j + 1; k < len2; ++k) {
-        if (list1[i] == list2[k]) {
+        if (list_left[i] == list_right[k]) {
           while (j<k) {
-            vOutput.push_back(WsjcppDiffTextRow(j, sWord.at(0), list2.at(j)));
+            output_diff.push_back(diff_text_row(j, sWord.at(0), list_right.at(j)));
             j++;
           }
           goto exit;
         }
       }
       // checkout for deleted rows
-      for (int k=i+1;k<len1;++k) {
-        if (list1[k]==list2[j]) {
+      for (int k = i + 1; k < len1; ++k) {
+        if (list_left[k] == list_right[j]) {
           while (i<k) {
-            vOutput.push_back(WsjcppDiffTextRow(i, sWord.at(1), list1.at(i)));
+            output_diff.push_back(diff_text_row(i, sWord.at(1), list_left.at(i)));
             i++;
           }
           goto exit;
         }
       }
-      vOutput.push_back(WsjcppDiffTextRow(i, list1.at(i), list2.at(j)));
+      output_diff.push_back(diff_text_row(i, list_left.at(i), list_right.at(j)));
       exit:;
     }
     i++, j++;
   }
   //work with the end of the texts
   while (j < len2) {
-    vOutput.push_back(WsjcppDiffTextRow(j, sWord.at(0), list2.at(j)));
+    output_diff.push_back(diff_text_row(j, sWord.at(0), list_right.at(j)));
     j++;
   }
   while (i < len1) {
-    vOutput.push_back(WsjcppDiffTextRow(i, sWord.at(1), list1.at(i)));
+    output_diff.push_back(diff_text_row(i, sWord.at(1), list_left.at(i)));
     i++;
   }
 }
 
-void WsjcppDiffText::merge(
+void diff_text_merge(
   std::string &curtxt,
   std::string &txt1,
   std::string &txt2,
-  std::vector<WsjcppDiffTextRow> &arr1,
-  std::vector<WsjcppDiffTextRow> &arr2
+  std::vector<diff_text_row> &arr1,
+  std::vector<diff_text_row> &arr2
 ) {
-  WsjcppDiffText::compare(txt1, txt2, arr1);
-  WsjcppDiffText::compare(txt1, curtxt, arr2);
+  diff_text_compare(txt1, txt2, arr1);
+  diff_text_compare(txt1, curtxt, arr2);
   for (unsigned int i = 0; i < arr2.size(); ++i) {
     for (unsigned int j = 0; j < arr1.size(); ++j) {
       //delete of matches and 'del'/'add' overlays from the first vector
@@ -152,3 +142,5 @@ void WsjcppDiffText::merge(
     }
   }
 }
+
+} // namespace wsjcpp
