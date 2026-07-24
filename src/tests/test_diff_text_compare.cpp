@@ -76,11 +76,18 @@ int main() {
   std::vector<wsjcpp::diff_text_row> arr1, arr2;
 
   tests.push_back(LTest("", "", {}));
-  // tests.push_back(LTest("line1\nline2", "line1\nline2", {
-  //   wsjcpp::diff_text_row(1, "line1", "line1")
-  // }));
+  tests.push_back(LTest("line1\nline2", "line1\nline2", {}));
+  tests.push_back(LTest("line1\nline2", "line1\nline2\nline3", {
+    wsjcpp::diff_text_row(2, "!add", "line3")
+  }));
+  tests.push_back(LTest("line1\nline2\nline3", "line1\n\nline3", {
+    wsjcpp::diff_text_row(1, "", "")
+    // wsjcpp::diff_text_row(1, "!del", "line2"),
+    // wsjcpp::diff_text_row(1, "!add", "")
+  }));
 
   for (unsigned int i = 0; i < tests.size(); i++) {
+    int test_n = i + 1;
     LTest test = tests[i];
     std::vector<wsjcpp::diff_text_row> output;
     wsjcpp::diff_text_compare(test.text_left, test.text_right, output);
@@ -91,10 +98,12 @@ int main() {
               << test.expected.size() << ", but got: " << output.size() << std::endl;
     } else {
       for (int l = 0; l < test.expected.size(); l++) {
-        // TODO 
-        // if (test.expected[l] != output[l]) {
-        //   
-        // }
+        if (test.expected[l].to_string() != output[l].to_string()) {
+          found_errors++;
+          std::cerr
+            << "In the test #" << (i + 1) << " line expected: '"
+            << test.expected[l].to_string() << "', but got: '" << output[l].to_string() << "'" << std::endl;
+        }
       }
     }
   }

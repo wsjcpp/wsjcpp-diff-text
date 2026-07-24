@@ -32,17 +32,20 @@ WsjcppCore::readTextFile("data/file1.txt", sFileContent2);
 std::vector<wsjcpp::diff_text_row> result;
 WsjcppDiffText::compare(sFileContent1, sFileContent2, result);
 for (int i = 0; i < result.size(); i++) {
-    std::cout
-        << result[i].key() << " => line (" << result[i].number_of_line() << "): "
-        << result[i].line() << std::endl;
+    std::cout << result[i].to_string() << std::endl;
 }
+```
+
+Run:
+```sh
+$ ./wsjcpp-diff-text ./data/file1.txt ./data/file2.txt
 ```
 
 example output:
 ```
-!del => line (1): 22222
-!add => line (6): 71111
-!add => line (10): 11111
+1:-22222
+6:+71111
+10:+11111
 ```
 
 

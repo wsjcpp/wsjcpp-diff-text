@@ -27,6 +27,8 @@ public:
   bool is_insert() const;
   std::string line() const;
 
+  std::string to_string() const;
+
 private:
   int m_number_of_line;
   std::string m_key;

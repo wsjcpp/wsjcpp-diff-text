@@ -47,6 +47,21 @@ std::string diff_text_row::line() const {
   return m_line;
 }
 
+std::string diff_text_row::to_string() const {
+  std::string ret;
+  ret += std::to_string(m_number_of_line);
+  ret += ":";
+  if (action() == diff_text_row_action::DELETE) {
+    ret += "-";
+  } else if (action() == diff_text_row_action::INSERT) {
+    ret += "+";
+  } else {
+    ret += ".";
+  }
+  ret += m_line;
+  return ret;
+}
+
 void diff_text_split(const std::string &text, std::vector<std::string> &output) {
   std::istringstream is_text(text);
   std::string line = "";
