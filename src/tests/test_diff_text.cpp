@@ -36,17 +36,13 @@ int main() {
         std::string txt1,
         std::string txt2,
         std::string txt3,
-        std::vector<wsjcpp::diff_text_row> arr1,
-        std::vector<wsjcpp::diff_text_row> arr2,
         unsigned int n
-    ) : txt1(txt1), txt2(txt2), txt3(txt3), arr1(arr1), arr2(arr2), n(n) {
+    ) : txt1(txt1), txt2(txt2), txt3(txt3), n(n) {
         //
     }
     std::string txt1;
     std::string txt2;
     std::string txt3;
-    std::vector<wsjcpp::diff_text_row> arr1;
-    std::vector<wsjcpp::diff_text_row> arr2;
     unsigned int n;
   };
 
@@ -54,48 +50,50 @@ int main() {
   std::vector<wsjcpp::diff_text_row> arr1, arr2;
 
   //empty (Test №1)
-  tests1.push_back(new LTest("", "", "", arr1, arr2, 0));
+  tests1.push_back(new LTest("", "", "", 0));
   //without any difference (Test №2)
-  tests1.push_back(new LTest("I\ngot\nMike", "I\ngot\nMike", "I\ngot\nMike", arr1, arr2, 0));
+  tests1.push_back(new LTest("I\ngot\nMike", "I\ngot\nMike", "I\ngot\nMike", 0));
   //with a difference in the ending (Tests №3-6)
-  tests1.push_back(new LTest("I\ngot\nMike", "I\ngot\nMike", "I\ngot\nNike", arr1, arr2, 1));
-  tests1.push_back(new LTest("I\ngot\nNike", "I\ngot\nMike", "I\ngot\nMike", arr1, arr2, 1));
-  tests1.push_back(new LTest("I\ngot\nNike", "I\ngot\nMike", "I\ngot\nNike", arr1, arr2, 1));
-  tests1.push_back(new LTest("I\ngot\nBike", "I\ngot\nMike", "I\ngot\nNike", arr1, arr2, 1));
+  tests1.push_back(new LTest("I\ngot\nMike", "I\ngot\nMike", "I\ngot\nNike", 1));
+  tests1.push_back(new LTest("I\ngot\nNike", "I\ngot\nMike", "I\ngot\nMike", 1));
+  tests1.push_back(new LTest("I\ngot\nNike", "I\ngot\nMike", "I\ngot\nNike", 1));
+  tests1.push_back(new LTest("I\ngot\nBike", "I\ngot\nMike", "I\ngot\nNike", 1));
   //with a difference in the beginning (Tests №7-10)
-  tests1.push_back(new LTest("I\ngot\nMike", "I\ngot\nMike", "You\ngot\nMike", arr1, arr2, 1));
-  tests1.push_back(new LTest("You\ngot\nMike", "I\ngot\nMike", "I\ngot\nMike", arr1, arr2, 1));
-  tests1.push_back(new LTest("You\ngot\nMike", "I\ngot\nMike", "You\ngot\nMike", arr1, arr2, 1));
-  tests1.push_back(new LTest("We\ngot\nMike", "I\ngot\nMike", "You\ngot\nMike", arr1, arr2, 1));
+  tests1.push_back(new LTest("I\ngot\nMike", "I\ngot\nMike", "You\ngot\nMike", 1));
+  tests1.push_back(new LTest("You\ngot\nMike", "I\ngot\nMike", "I\ngot\nMike", 1));
+  tests1.push_back(new LTest("You\ngot\nMike", "I\ngot\nMike", "You\ngot\nMike", 1));
+  tests1.push_back(new LTest("We\ngot\nMike", "I\ngot\nMike", "You\ngot\nMike", 1));
   //with a difference in the middle of the row (Tests №11-15)
-  tests1.push_back(new LTest("I\nhave\ncute\ncats", "I\nhave\ncute\ncats", "I\nhave\nhuge\ncats", arr1, arr2, 1));
-  tests1.push_back(new LTest("I\nhave\nhuge\ncats", "I\nhave\ncute\ncats", "I\nhave\ncute\ncats", arr1, arr2, 1));
-  tests1.push_back(new LTest("I\nhave\nhuge\ncats", "I\nhave\ncute\ncats", "I\nhave\nhuge\ncats", arr1, arr2, 1));
-  tests1.push_back(new LTest("I\nhave\ndifference\ncats", "I\nhave\ncute\ncats", "I\nhave\nhuge\ncats", arr1, arr2, 1));
-  tests1.push_back(new LTest("I\nbetray\ncats", "I\nhave\ncats", "I\nlove\ncats", arr1, arr2, 1));
+  tests1.push_back(new LTest("I\nhave\ncute\ncats", "I\nhave\ncute\ncats", "I\nhave\nhuge\ncats", 1));
+  tests1.push_back(new LTest("I\nhave\nhuge\ncats", "I\nhave\ncute\ncats", "I\nhave\ncute\ncats", 1));
+  tests1.push_back(new LTest("I\nhave\nhuge\ncats", "I\nhave\ncute\ncats", "I\nhave\nhuge\ncats", 1));
+  tests1.push_back(new LTest("I\nhave\ndifference\ncats", "I\nhave\ncute\ncats", "I\nhave\nhuge\ncats", 1));
+  tests1.push_back(new LTest("I\nbetray\ncats", "I\nhave\ncats", "I\nlove\ncats", 1));
   //delete lines from the end of text (Tests №16-19)
-  tests1.push_back(new LTest("Go\nto\nthe\nschool", "Go\nto\nthe\nschool", "Go\nto", arr1, arr2, 2));
-  tests1.push_back(new LTest("Go\nto", "Go\nto\nthe\nschool", "Go\nto\nthe\nschool", arr1, arr2, 2));
-  tests1.push_back(new LTest("Go\nto\nthe", "Go\nto\nthe\nschool", "Go\nto", arr1, arr2, 2));
-  tests1.push_back(new LTest("Go\nto", "Go\nto\nthe\nschool", "Go\nto\nthe", arr1, arr2, 2));
+  tests1.push_back(new LTest("Go\nto\nthe\nschool", "Go\nto\nthe\nschool", "Go\nto", 2));
+  tests1.push_back(new LTest(
+    "Go\nto", "Go\nto\nthe\nschool", "Go\nto\nthe\nschool", 2
+  ));
+  tests1.push_back(new LTest("Go\nto\nthe", "Go\nto\nthe\nschool", "Go\nto", 2));
+  tests1.push_back(new LTest("Go\nto", "Go\nto\nthe\nschool", "Go\nto\nthe", 2));
   //add lines in the end of text (Tests №20-23)
-  tests1.push_back(new LTest("Go\nto", "Go\nto", "Go\nto\nthe\nschool", arr1, arr2, 2));
-  tests1.push_back(new LTest("Go\nto\nthe\nschool", "Go\nto", "Go\nto", arr1, arr2, 2));
-  tests1.push_back(new LTest("Go\nto\nthe", "Go\nto", "Go\nto\nthe\nschool", arr1, arr2, 2));
-  tests1.push_back(new LTest("Go\nto\nthe\nschool", "Go\nto", "Go\nto\nthe", arr1, arr2, 2));
+  tests1.push_back(new LTest("Go\nto", "Go\nto", "Go\nto\nthe\nschool", 2));
+  tests1.push_back(new LTest("Go\nto\nthe\nschool", "Go\nto", "Go\nto", 2));
+  tests1.push_back(new LTest("Go\nto\nthe", "Go\nto", "Go\nto\nthe\nschool", 2));
+  tests1.push_back(new LTest("Go\nto\nthe\nschool", "Go\nto", "Go\nto\nthe", 2));
   //delete rows from the beginning and the middle of text (Tests №24-27)
-  tests1.push_back(new LTest("Go\nto\nthe\nschool", "Go\nto\nthe\nschool", "the\nschool", arr1, arr2, 2));
-  tests1.push_back(new LTest("the\nschool", "Go\nto\nthe\nschool", "Go\nto\nthe\nschool", arr1, arr2, 2));
-  tests1.push_back(new LTest("Go\nto\nthe\nschool", "Go\nto\nthe\nschool", "Go\nto\nschool", arr1, arr2, 1));
-  tests1.push_back(new LTest("Go\nto\nschool", "Go\nto\nthe\nschool", "Go\nto\nthe\nschool", arr1, arr2, 1));
+  tests1.push_back(new LTest("Go\nto\nthe\nschool", "Go\nto\nthe\nschool", "the\nschool", 2));
+  tests1.push_back(new LTest("the\nschool", "Go\nto\nthe\nschool", "Go\nto\nthe\nschool", 2));
+  tests1.push_back(new LTest("Go\nto\nthe\nschool", "Go\nto\nthe\nschool", "Go\nto\nschool", 1));
+  tests1.push_back(new LTest("Go\nto\nschool", "Go\nto\nthe\nschool", "Go\nto\nthe\nschool", 1));
   //add rows to the beginning and the middle of text (Tests №28-31)
-  tests1.push_back(new LTest("the\nschool", "the\nschool", "Go\nto\nthe\nschool", arr1, arr2, 2));
-  tests1.push_back(new LTest("Go\nto\nthe\nschool", "the\nschool", "the\nschool", arr1, arr2, 2));
-  tests1.push_back(new LTest("Go\nthe\nschool", "the\nschool", "the\nschool", arr1, arr2, 1));
-  tests1.push_back(new LTest("the\nschool", "the\nschool", "Go\nthe\nschool", arr1, arr2, 1));
+  tests1.push_back(new LTest("the\nschool", "the\nschool", "Go\nto\nthe\nschool", 2));
+  tests1.push_back(new LTest("Go\nto\nthe\nschool", "the\nschool", "the\nschool", 2));
+  tests1.push_back(new LTest("Go\nthe\nschool", "the\nschool", "the\nschool", 1));
+  tests1.push_back(new LTest("the\nschool", "the\nschool", "Go\nthe\nschool", 1));
   //complex (Tests №32-33)
-  tests1.push_back(new LTest("You\nare\ngot\nand\ngood", "I\ngot\nMike\nand\nthis is\ngood\nboy", "I\ncure\ndamn\nill\ncancer", arr1, arr2, 8));
-  tests1.push_back(new LTest("We\nspent\nthe rest\nof our life\non\nthis\ncourse\nwork", "We\nspent\na lot of\ntime\non\nthis\ncourse\nwork", "We\ngonna\nspend\na lot of\nfunky\ntime\non\ncourse\nwork", arr1, arr2, 6));
+  tests1.push_back(new LTest("You\nare\ngot\nand\ngood", "I\ngot\nMike\nand\nthis is\ngood\nboy", "I\ncure\ndamn\nill\ncancer", 8));
+  tests1.push_back(new LTest("We\nspent\nthe rest\nof our life\non\nthis\ncourse\nwork", "We\nspent\na lot of\ntime\non\nthis\ncourse\nwork", "We\ngonna\nspend\na lot of\nfunky\ntime\non\ncourse\nwork", 6));
 
   for (unsigned int i = 0; i < tests1.size(); i++) {
     std::string txt1 = tests1[i]->txt1;
@@ -106,7 +104,7 @@ int main() {
 
     if (arr1.size() != n) {
       found_errors++;
-      std::cerr << "In the test №" << (i + 1) << " the length of the vector is expected: "
+      std::cerr << "In the test #" << (i + 1) << " the length of the vector is expected: "
               << n << ", but got: " << arr1.size() << std::endl;
     }
     arr1.clear();
@@ -180,16 +178,16 @@ int main() {
     std::string line2 = arr3[i].getLine();
     if (id1 != id2) {
       found_errors++;
-      std::cerr << "In the sort test in the element №" << std::to_string(i+1) << ": id1 != id2" << std::endl;
+      std::cerr << "In the sort test in the element #" << std::to_string(i + 1) << ": id1 != id2" << std::endl;
     }
 
     if (key1 != key2) {
       found_errors++;
-      std::cerr << "In the sort test in the element №" << std::to_string(i+1) << ": key1 != key2" << std::endl;
+      std::cerr << "In the sort test in the element #" << std::to_string(i + 1) << ": key1 != key2" << std::endl;
     }
     if (line1 != line2) {
       found_errors++;
-      std::cerr << "In the sort test in the element №" << std::to_string(i+1) << ": line1 != line2" << std::endl;
+      std::cerr << "In the sort test in the element #" << std::to_string(i + 1) << ": line1 != line2" << std::endl;
     }
   }
 
