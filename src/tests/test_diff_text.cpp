@@ -170,8 +170,8 @@ int main() {
   wsjcpp::diff_text_merge(txt1, txt2, txt3, arr1, arr2);
 
   for (int i = 0; i < 8; ++i) {
-    int id1 = arr1[i].getNumberOfLine();
-    int id2 = arr3[i].getNumberOfLine();
+    int id1 = arr1[i].number_of_line();
+    int id2 = arr3[i].number_of_line();
     std::string key1 = arr1[i].key();
     std::string key2 = arr3[i].key();
     std::string line1 = arr1[i].line();

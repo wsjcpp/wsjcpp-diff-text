@@ -41,7 +41,7 @@ int main(int argc, const char* argv[]) {
   wsjcpp::diff_text_compare(file_content1, file_content2, result);
   for (int i = 0; i < result.size(); i++) {
     std::cout
-      << result[i].key() << " => line (" << result[i].getNumberOfLine() << "): "
+      << result[i].key() << " => line (" << result[i].number_of_line() << "): "
       << result[i].line()
       << std::endl;
   }

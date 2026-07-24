@@ -14,7 +14,7 @@ diff_text_row::diff_text_row(
   , m_line(line)
 {}
 
-int diff_text_row::getNumberOfLine() const {
+int diff_text_row::number_of_line() const {
   return m_number_of_line;
 }
 
@@ -160,7 +160,7 @@ void diff_text_merge(
   arr_left.insert(arr_left.end(), arr_right.begin(), arr_right.end());
   for (unsigned int i = 0; i < arr_left.size(); ++i) {
     for (unsigned int j = arr_left.size() - 1; j > i; --j) {
-      if (arr_left.at(j - 1).getNumberOfLine() > arr_left.at(j).getNumberOfLine()) {
+      if (arr_left.at(j - 1).number_of_line() > arr_left.at(j).number_of_line()) {
         // TODO redesign
         std::swap(arr_left.at(j - 1), arr_left.at(j));
       }

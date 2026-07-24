@@ -20,7 +20,7 @@ public:
     const std::string &key,
     const std::string &line
   );
-  int getNumberOfLine() const;
+  int number_of_line() const;
   std::string key() const;
   diff_text_row_action action() const;
   bool is_delete() const;
