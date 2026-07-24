@@ -172,8 +172,8 @@ int main() {
   for (int i = 0; i < 8; ++i) {
     int id1 = arr1[i].getNumberOfLine();
     int id2 = arr3[i].getNumberOfLine();
-    std::string key1 = arr1[i].getKey();
-    std::string key2 = arr3[i].getKey();
+    std::string key1 = arr1[i].key();
+    std::string key2 = arr3[i].key();
     std::string line1 = arr1[i].line();
     std::string line2 = arr3[i].line();
     if (id1 != id2) {

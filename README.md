@@ -33,7 +33,7 @@ std::vector<WsjcppDiffTextRow> vResult;
 WsjcppDiffText::compare(sFileContent1, sFileContent2, vResult);
 for (int i = 0; i < vResult.size(); i++) {
     std::cout
-        << vResult[i].getKey() << " => line (" << vResult[i].getNumberOfLine() << "): "
+        << vResult[i].key() << " => line (" << vResult[i].getNumberOfLine() << "): "
         << vResult[i].line() << std::endl;
 }
 ```

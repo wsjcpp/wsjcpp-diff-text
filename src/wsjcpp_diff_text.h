@@ -21,7 +21,7 @@ public:
     const std::string &line
   );
   int getNumberOfLine();
-  std::string getKey();
+  std::string key();
   std::string line();
 
 private:
