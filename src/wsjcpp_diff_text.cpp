@@ -73,8 +73,8 @@ void diff_text_compare(
   int len1 = list_left.size();
   int len2 = list_right.size();
   int i = 0, j = 0;
-  //main comparisons
-  while ((i<len1) && (j<len2)) {
+  // main comparisons
+  while ((i < len1) && (j < len2)) {
     if (list_left[i] != list_right[j]) {
       // checkout for added rows
       for (int k = j + 1; k < len2; ++k) {
@@ -116,49 +116,53 @@ void diff_text_merge(
   std::string &curtxt,
   std::string &txt1,
   std::string &txt2,
-  std::vector<diff_text_row> &arr1,
-  std::vector<diff_text_row> &arr2
+  std::vector<diff_text_row> &arr_left,
+  std::vector<diff_text_row> &arr_right
 ) {
-  diff_text_compare(txt1, txt2, arr1);
-  diff_text_compare(txt1, curtxt, arr2);
-  for (unsigned int i = 0; i < arr2.size(); ++i) {
-    for (unsigned int j = 0; j < arr1.size(); ++j) {
+  diff_text_compare(txt1, txt2, arr_left);
+  diff_text_compare(txt1, curtxt, arr_right);
+  for (unsigned int i = 0; i < arr_right.size(); ++i) {
+    const diff_text_row &row_right = arr_right.at(i);
+    for (unsigned int j = 0; j < arr_left.size(); ++j) {
+      const diff_text_row &row_left = arr_left.at(j);
       //delete of matches and 'del'/'add' overlays from the first vector
-      bool bLinesEqual = arr2[i].line() == arr1[j].line();
-      bool bKeysEqual = arr2[i].key() == arr1[j].line(); // TODO why comparing key and line ???
-      std::string sKey1 = arr1[j].key();
-      std::string sKey2 = arr2[i].key();
-      if (
-        (bLinesEqual && (sKey1 == sKey2 || sKey1 == "!add"))
-        || (bKeysEqual && (sKey1 == "!del"))
+      bool bLinesEqual = row_right.line() == row_left.line();
+      if (bLinesEqual &&
+          (
+            (row_right.is_insert() && row_left.is_insert())
+            || (row_left.is_delete())
+          )
       ) {
-        arr1.erase(arr1.begin()+j);
+        arr_left.erase(arr_left.begin() + j);
         break;
       }
     }
   }
-  for (unsigned int i = 0; i < arr1.size(); ++i) {
-    for (unsigned int j = 0; j < arr2.size(); ++j) {
+  for (unsigned int i = 0; i < arr_left.size(); ++i) {
+    const diff_text_row &row_left = arr_left.at(i);
+    for (unsigned int j = 0; j < arr_right.size(); ++j) {
+      const diff_text_row &row_right = arr_right.at(j);
       //delete of del overlays from the second vector and update of priority
-      bool bLinesEqual = arr1[i].key() == arr2.at(j).line(); // TODO check why comparing key and line here ?
-      bool bKeysEqual = arr1.at(i).key() == arr2.at(j).key();
-      std::string sKey = arr2.at(j).key();
-      if ((bLinesEqual && (sKey == "!del"))
-            || (bKeysEqual && (sKey != "!add") && (sKey != "!del")))
-      {
-        arr2.erase(arr2.begin()+j);
+      bool bLinesEqual = row_left.key() == row_right.line(); // TODO check why comparing key and line here ?
+      bool bKeysEqual = row_left.key() == row_right.key();
+      std::string key_right = row_right.key();
+      if (
+          (bLinesEqual && row_right.is_delete())
+          || (bKeysEqual && !row_right.is_insert() && !row_right.is_delete())
+      ) {
+        arr_right.erase(arr_right.begin() + j);
         break;
       }
     }
   }
   // merge and sort vectors
-  arr1.reserve(arr1.size()+arr2.size());
-  arr1.insert(arr1.end(),arr2.begin(),arr2.end());
-  for (unsigned int i=0; i < arr1.size(); ++i) {
-    for (unsigned int j = arr1.size() - 1; j > i; --j) {
-      if (arr1.at(j-1).getNumberOfLine() > arr1.at(j).getNumberOfLine()) {
+  arr_left.reserve(arr_left.size() + arr_right.size());
+  arr_left.insert(arr_left.end(), arr_right.begin(), arr_right.end());
+  for (unsigned int i = 0; i < arr_left.size(); ++i) {
+    for (unsigned int j = arr_left.size() - 1; j > i; --j) {
+      if (arr_left.at(j - 1).getNumberOfLine() > arr_left.at(j).getNumberOfLine()) {
         // TODO redesign
-        std::swap(arr1.at(j-1), arr1.at(j));
+        std::swap(arr_left.at(j - 1), arr_left.at(j));
       }
     }
   }
