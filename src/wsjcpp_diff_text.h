@@ -22,7 +22,7 @@ public:
   );
   int getNumberOfLine();
   std::string getKey();
-  std::string getLine();
+  std::string line();
 
 private:
   int m_number_of_line;

@@ -42,7 +42,7 @@ int main(int argc, const char* argv[]) {
   for (int i = 0; i < result.size(); i++) {
     std::cout
       << result[i].getKey() << " => line (" << result[i].getNumberOfLine() << "): "
-      << result[i].getLine()
+      << result[i].line()
       << std::endl;
   }
   result.clear();

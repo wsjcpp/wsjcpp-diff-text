@@ -174,8 +174,8 @@ int main() {
     int id2 = arr3[i].getNumberOfLine();
     std::string key1 = arr1[i].getKey();
     std::string key2 = arr3[i].getKey();
-    std::string line1 = arr1[i].getLine();
-    std::string line2 = arr3[i].getLine();
+    std::string line1 = arr1[i].line();
+    std::string line2 = arr3[i].line();
     if (id1 != id2) {
       found_errors++;
       std::cerr << "In the sort test in the element #" << std::to_string(i + 1) << ": id1 != id2" << std::endl;

@@ -22,7 +22,7 @@ std::string diff_text_row::getKey() {
   return m_key;
 }
 
-std::string diff_text_row::getLine() {
+std::string diff_text_row::line() {
   return m_line;
 }
 
@@ -103,8 +103,8 @@ void diff_text_merge(
   for (unsigned int i = 0; i < arr2.size(); ++i) {
     for (unsigned int j = 0; j < arr1.size(); ++j) {
       //delete of matches and 'del'/'add' overlays from the first vector
-      bool bLinesEqual = arr2[i].getLine() == arr1[j].getLine();
-      bool bKeysEqual = arr2[i].getKey() == arr1[j].getLine(); // TODO why comparing key and line ???
+      bool bLinesEqual = arr2[i].line() == arr1[j].line();
+      bool bKeysEqual = arr2[i].getKey() == arr1[j].line(); // TODO why comparing key and line ???
       std::string sKey1 = arr1[j].getKey();
       std::string sKey2 = arr2[i].getKey();
       if (
@@ -119,7 +119,7 @@ void diff_text_merge(
   for (unsigned int i = 0; i < arr1.size(); ++i) {
     for (unsigned int j = 0; j < arr2.size(); ++j) {
       //delete of del overlays from the second vector and update of priority
-      bool bLinesEqual = arr1[i].getKey() == arr2.at(j).getLine(); // TODO check why comparing key and line here ?
+      bool bLinesEqual = arr1[i].getKey() == arr2.at(j).line(); // TODO check why comparing key and line here ?
       bool bKeysEqual = arr1.at(i).getKey() == arr2.at(j).getKey();
       std::string sKey = arr2.at(j).getKey();
       if ((bLinesEqual && (sKey == "!del"))
