@@ -14,15 +14,36 @@ diff_text_row::diff_text_row(
   , m_line(line)
 {}
 
-int diff_text_row::getNumberOfLine() {
+int diff_text_row::getNumberOfLine() const {
   return m_number_of_line;
 }
 
-std::string diff_text_row::key() {
+std::string diff_text_row::key() const {
   return m_key;
 }
 
-std::string diff_text_row::line() {
+diff_text_row_action diff_text_row::action() const {
+  if (m_key == "!del") {
+    return diff_text_row_action::DELETE;
+  }
+  if (m_key == "!add") {
+    return diff_text_row_action::INSERT;
+  }
+  if (m_key == m_line) {
+    return diff_text_row_action::NONE;
+  }
+  return diff_text_row_action::NONE;
+}
+
+bool diff_text_row::is_delete() const {
+  return action() == diff_text_row_action::DELETE;
+}
+
+bool diff_text_row::is_insert() const {
+  return action() == diff_text_row_action::INSERT;
+}
+
+std::string diff_text_row::line() const {
   return m_line;
 }
 

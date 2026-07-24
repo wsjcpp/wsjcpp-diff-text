@@ -20,9 +20,12 @@ public:
     const std::string &key,
     const std::string &line
   );
-  int getNumberOfLine();
-  std::string key();
-  std::string line();
+  int getNumberOfLine() const;
+  std::string key() const;
+  diff_text_row_action action() const;
+  bool is_delete() const;
+  bool is_insert() const;
+  std::string line() const;
 
 private:
   int m_number_of_line;
